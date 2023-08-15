@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head'); %></head>
+<body class="container">
+
+	<h2 style="margin-bottom:20px; text-align:center;">Edit Data</h2>
+    <form method="post" action="/update">
+
+			<div class="form-group">
+				<input type="text" name="id" value="<%= id %>" readonly class="form-control" placeholder="ID">
+			</div>
+			<div class="form-group">
+				<input type="text" name="name" value="<%= name %>" class="form-control" placeholder="Name">
+			</div>
+			<div class="form-group">
+				<input type="text" name="age" value="<%= age %>" class="form-control" placeholder="Age">
+			</div>
+			<button type="submit" class="pull-right btn btn-primary">Yes Update</button>
+			
+    </form>
+
+</body>
+</html>

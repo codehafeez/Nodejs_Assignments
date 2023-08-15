@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit Student</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <h1>Edit Student</h1>
+  <form action="/students/<%= student._id %>?_method=PUT" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="<%= student.name %>" required>
+    <br>
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" value="<%= student.age %>" required>
+    <br>
+    <label for="father_name">Father's Name:</label>
+    <input type="text" id="father_name" name="father_name" value="<%= student.father_name %>" required>
+    <br>
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" required>
+      <option value="Male" <%= student.gender === 'Male' ? 'selected' : '' %>>Male</option>
+      <option value="Female" <%= student.gender === 'Female' ? 'selected' : '' %>>Female</option>
+      <option value="Other" <%= student.gender === 'Other' ? 'selected' : '' %>>Other</option>
+    </select>
+    <br>
+    <button type="submit">Update</button>
+  </form>
+  
+</body>
+</html>

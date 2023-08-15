@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+  <div id="chat">
+    <div id="messages"></div>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+    <form id="logout" action="/logout" method="get">
+      <button>Logout</button>
+    </form>
+  </div>
+
+  <script>
+    const socket = io();
+
+    const chat = document.getElementById('chat');
+    const messages = document.getElementById('messages');
+    const input = document.getElementById('input');
+    const form = document.getElementById('form');
+    const logoutForm = document.getElementById('logout');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = input.value.trim();
+      if (msg) {
+        socket.emit('chat message', msg);
+        input.value = '';
+      }
+    });
+
+    logoutForm.addEventListener('submit', () => {
+      socket.disconnect();
+    });
+
+    socket.on('system message', (msg) => {
+      const sysMessage = document.createElement('div');
+      sysMessage.textContent = msg;
+      messages.appendChild(sysMessage);
+    });
+
+    socket.on('chat message', ({ username, message }) => {
+      const msgElement = document.createElement('div');
+      msgElement.textContent = `${username}: ${message}`;
+      messages.appendChild(msgElement);
+    });
+
+    socket.on('disconnect', () => {
+      messages.innerHTML = '<p>You have been disconnected from the chat.</p>';
+    });
+  </script>
+</body>
+</html>

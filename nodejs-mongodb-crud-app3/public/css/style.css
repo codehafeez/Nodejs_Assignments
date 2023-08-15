@@ -1,0 +1,24 @@
+body {
+  margin-top:80px;
+}
+
+.fa {
+  margin-right:10px;
+}
+
+
+img {
+  width:100%;
+}
+
+.txt_heading{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.footer_link{
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-size:20px;
+  text-align:center;
+}

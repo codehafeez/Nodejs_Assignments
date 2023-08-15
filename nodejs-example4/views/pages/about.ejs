@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+<%- include('../partials/header'); %>
+</header>
+
+<h1>About Us Page</h1>
+<a href="/delete/1"><button>Call function check console</button><a>
+<button onclick="testFun()">Simple Function Alert</button>
+
+<footer>
+<%- include('../partials/footer'); %>
+</footer>
+
+
+<script>
+function testFun(){
+	alert('test message hello world');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Chat</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+  <div id="chat">
+    <div id="room-form">
+      <input id="username" placeholder="Username" />
+      <input id="room" placeholder="Room" />
+      <button id="join">Join</button>
+    </div>
+    <div id="room-container" style="display: none;">
+      <div id="messages"></div>
+      <form id="form" action="">
+        <input id="input" autocomplete="off" /><button>Send</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const socket = io();
+
+    const chat = document.getElementById('chat');
+    const roomForm = document.getElementById('room-form');
+    const roomContainer = document.getElementById('room-container');
+    const messages = document.getElementById('messages');
+    const input = document.getElementById('input');
+    const usernameInput = document.getElementById('username');
+    const roomInput = document.getElementById('room');
+    const joinButton = document.getElementById('join');
+
+    let username = '';
+    let room = '';
+
+    joinButton.addEventListener('click', () => {
+      username = usernameInput.value.trim();
+      room = roomInput.value.trim();
+      if (username && room) {
+        socket.emit('join', username, room);
+        roomForm.style.display = 'none';
+        roomContainer.style.display = 'block';
+      }
+    });
+
+    document.getElementById('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = input.value.trim();
+      if (msg) {
+        socket.emit('chat message', msg);
+        input.value = '';
+      }
+    });
+
+    socket.on('system message', (msg) => {
+      const sysMessage = document.createElement('div');
+      sysMessage.classList.add('system-message');
+      sysMessage.textContent = msg;
+      messages.appendChild(sysMessage);
+    });
+
+    socket.on('chat message', ({ username, message }) => {
+      const msgElement = document.createElement('div');
+      msgElement.classList.add('chat-message');
+      msgElement.textContent = `${username}: ${message}`;
+      messages.appendChild(msgElement);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Socket.IO Chat Example</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+
+  <ul id="messages"></ul>
+  <form id="form">
+    <input id="input"/><button>Send</button>
+  </form>
+
+<script>
+const socket = io();
+document.getElementById('form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const input = document.getElementById('input');
+  const msg = input.value.trim();
+  if (msg) {
+    socket.emit('chat-message', msg); // send message to socket
+    input.value = '';
+  }
+});
+
+// read message from socket
+socket.on('chat-message', (msg) => {
+  const messages = document.getElementById('messages');
+  const li = document.createElement('li');
+  li.textContent = msg;
+  messages.appendChild(li);
+});
+
+</script>
+</body>
+</html>
